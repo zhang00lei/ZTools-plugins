@@ -1,0 +1,28 @@
+{
+  "name": "ztools-download",
+  "title": "Aria2 多线程下载器",
+  "pluginName": "Aria2 多线程下载器",
+  "description": "基于 Aria2 的高性能多线程下载工具，支持最高16线程分片加速、断点续传与剪贴板快捷吸附",
+  "version": "1.0.0",
+  "author": "zhanglei",
+  "main": "index.html",
+  "preload": "preload.js",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "download",
+      "explain": "打开 Aria2 多线程下载器",
+      "cmds": [
+        "download",
+        "aria2",
+        "下载",
+        "下载器",
+        "多线程下载",
+        "xz"
+      ]
+    }
+  ],
+  "platform": [
+    "win32"
+  ]
+}
