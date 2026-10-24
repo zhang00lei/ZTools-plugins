@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval'; media-src 'self' data: blob: file:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+  <title>白噪音聆听 - 自然声音与专注氛围</title>
+  <meta name="description" content="白噪音聆听以大自然的声音为灵感，轻松创建专注或放松的音乐氛围。无需账户，无需繁琐设置——只有纯粹的宁静。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="logo.png">
+</head>
+<body data-theme="theme-forest">
+  <div class="app-container">
+    <!-- 顶部导航栏 -->
+    <header class="header">
+      <!-- 品牌 Logo -->
+      <div class="brand-container" style="display: flex; align-items: center; gap: 8px;">
+        <img src="logo.png" alt="Logo" style="width: 28px; height: 28px; border-radius: 6px;">
+        <h1 class="logo" title="白噪音聆听 (DayListening)">DayListening</h1>
+      </div>
+
+      <!-- 专注番茄钟 / 倒计时 -->
+      <div class="timer-container" title="点击时间切换时长，空格键快速暂停/开始">
+        <button id="timer-reset-btn" class="timer-btn" title="重置计时器">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/>
+          </svg>
+        </button>
+        <button id="timer-display" class="timer-display" title="切换倒计时时长">25 : 00</button>
+        <button id="timer-play-btn" class="timer-btn" title="开始/暂停 (空格键)">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- 右侧快捷功能栏 -->
+      <div class="header-actions">
+        <!-- 音量 -->
+        <button id="action-volume-btn" class="action-btn" title="主音量调节（双击静音）">
+          <svg id="volume-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- 预设列表 -->
+        <button id="action-presets-btn" class="action-btn" title="混音预设方案">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h7"></path>
+          </svg>
+        </button>
+
+        <!-- 主题切换 -->
+        <button id="action-theme-btn" class="action-btn" title="主题配色">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9V3z" fill="currentColor"></path>
+          </svg>
+        </button>
+
+        <!-- 设置 -->
+        <button id="action-settings-btn" class="action-btn" title="偏好设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+
+        <!-- 主音量浮动滑块 -->
+        <div id="master-volume-popover" class="master-volume-popover">
+          <span style="font-size: 13px; opacity: 0.8;">音量</span>
+          <input type="range" id="master-volume-slider" aria-label="主音量" min="0" max="100" value="60" style="width: 120px;">
+          <button id="mute-btn" class="pill-btn" aria-pressed="false">静音</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 次级药丸操作栏：保存与清空 -->
+    <div class="sub-actions">
+      <span id="mix-status" class="mix-status" role="status">选择声音，开始聆听</span>
+      <button id="mix-play-btn" class="pill-btn" disabled>播放混音</button>
+      <button id="sub-save-btn" class="pill-btn">保存当前混音</button>
+      <button id="sub-clear-btn" class="pill-btn">清空所有</button>
+    </div>
+
+    <nav class="quick-presets-bar" aria-label="宁静预设">
+      <span class="quick-presets-label">宁静预设</span>
+      <div id="quick-presets" class="quick-presets"></div>
+    </nav>
+
+    <!-- 声音分类与卡片主区域 -->
+    <main id="main-content" class="main-content">
+      <!-- 动态注入各大分类及图标 -->
+    </main>
+
+    <!-- 底部文案 -->
+    <footer class="footer">
+      <p class="footer-quote">
+        不必追赶每一种声音，安静也是一种抵达。
+      </p>
+    </footer>
+  </div>
+
+  <!-- ================= 弹窗集合 ================= -->
+
+  <!-- 1. 保存预设弹窗 -->
+  <div id="modal-save-preset" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">保存当前混音</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+        预设需包含一首背景音乐，也可搭配环境声。为这份组合起一个名字吧。
+      </p>
+      <input type="text" id="preset-name-input" class="text-input" placeholder="例如：深夜阅读、午后轻雨…" maxlength="20">
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button class="pill-btn modal-cancel" style="flex: 1; padding: 10px;">取消</button>
+        <button id="confirm-save-preset-btn" class="btn-primary" style="flex: 1;">保存预设</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 预设列表弹窗 -->
+  <div id="modal-presets" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">混音预设方案</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div id="presets-list" class="presets-list">
+        <!-- 动态生成预设列表 -->
+      </div>
+      <button class="btn-primary modal-close">关闭</button>
+    </div>
+  </div>
+
+  <!-- 3. 主题选择弹窗 -->
+  <div id="modal-themes" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">选择背景主题</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="themes-grid">
+        <button class="theme-option theme-forest-btn active" data-theme="theme-forest" title="森林墨绿" aria-pressed="true"></button>
+        <button class="theme-option theme-violet-btn" data-theme="theme-violet" title="暮霭雅紫" aria-pressed="false"></button>
+        <button class="theme-option theme-ocean-btn" data-theme="theme-ocean" title="深海蔚蓝" aria-pressed="false"></button>
+        <button class="theme-option theme-sunset-btn" data-theme="theme-sunset" title="落日暮红" aria-pressed="false"></button>
+        <button class="theme-option theme-midnight-btn" data-theme="theme-midnight" title="极夜深灰" aria-pressed="false"></button>
+      </div>
+      <button class="btn-primary modal-close">完成</button>
+    </div>
+  </div>
+
+  <!-- 4. 设置弹窗 -->
+  <div id="modal-settings" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">偏好设置</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px; font-size: 14px; margin-bottom: 24px;">
+        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+          <span>倒计时结束时自动停止播放声音</span>
+          <input type="checkbox" id="setting-auto-stop" checked style="width: 16px; height: 16px; cursor: pointer;">
+        </label>
+        <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+          <span>退出插件页面后继续播放</span>
+          <input type="checkbox" id="setting-background-play" checked style="width: 16px; height: 16px; cursor: pointer;">
+        </label>
+        <div style="border-top: 1px solid var(--border-subtle); padding-top: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+          <p>舒缓氛围、冥想钢琴、流动幽境、柔光漫游、睡莲：Kevin MacLeod (incompetech.com)，CC BY 4.0。完整曲目名称和来源见音源说明。</p>
+        </div>
+      </div>
+      <button class="btn-primary modal-close">确定</button>
+    </div>
+  </div>
+
+  <!-- Toast 提示容器 -->
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- 插件核心业务逻辑 -->
+  <script src="app.js"></script>
+</body>
+</html>

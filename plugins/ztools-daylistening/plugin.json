@@ -1,0 +1,30 @@
+{
+  "name": "ztools-daylistening",
+  "title": "白噪音聆听",
+  "description": "32 个宁静环境与音乐音源，八组安静预设，一屏混音与专注倒计时",
+  "version": "1.0.0",
+  "main": "index.html",
+  "preload": "preload.js",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "daylistening",
+      "explain": "大自然白噪音与专注氛围",
+      "cmds": [
+        "白噪音",
+        "专注声音",
+        "背景音",
+        "自然声音",
+        "番茄钟",
+        "聆听",
+        "白噪音聆听",
+        "DayListening",
+        "freemind"
+      ]
+    }
+  ],
+  "author": "zhanglei",
+  "platform": [
+    "win32"
+  ]
+}
